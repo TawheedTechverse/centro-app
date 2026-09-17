@@ -1,0 +1,58 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Roster {
+  id           String   @id @default(cuid())
+  employeeName String
+  date         DateTime
+  day          String
+  shiftStart   String
+  shiftEnd     String
+  weekStart    DateTime
+  swappedFrom  String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([weekStart])
+}
+
+model InvoiceUpload {
+  id         String      @id @default(cuid())
+  fileName   String
+  uploadedAt DateTime    @default(now())
+  orderItems OrderItem[]
+}
+
+model OrderItem {
+  id          String        @id @default(cuid())
+  productName String
+  quantity    Int
+  unit        String?
+  orderDate   DateTime
+  invoice     InvoiceUpload @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+  invoiceId   String
+
+  @@index([productName])
+}
+
+model ExpiryProduct {
+  id             String    @id @default(cuid())
+  productName    String
+  expiryDate     DateTime
+  currentPrice   Float
+  suggestedPrice Float?
+  saleStartDate  DateTime?
+  aiNote         String?
+  createdAt      DateTime  @default(now())
+}

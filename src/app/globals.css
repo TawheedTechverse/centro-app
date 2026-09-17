@@ -1,26 +1,97 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #fdf7f8;
+  --foreground: #2b0a12;
+  --maroon: #7a1128;
+  --maroon-dark: #4a0a19;
+  --maroon-light: #c94a63;
+  --surface: 255 255 255;
+  --surface-border: 122 17 40;
+}
+
+:root.dark {
+  --background: #17070c;
+  --foreground: #f6e9ec;
+  --maroon: #c94a63;
+  --maroon-dark: #7a1128;
+  --maroon-light: #e8a0ad;
+  --surface: 30 12 18;
+  --surface-border: 233 178 190;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-maroon: var(--maroon);
+  --color-maroon-dark: var(--maroon-dark);
+  --color-maroon-light: var(--maroon-light);
+  --font-sans: var(--font-dm-sans);
 }
 
 body {
-  background: var(--background);
+  background:
+    radial-gradient(circle at 15% -10%, color-mix(in srgb, var(--maroon) 35%, transparent), transparent 55%),
+    linear-gradient(160deg, var(--maroon-dark) 0%, var(--maroon) 22%, var(--maroon-light) 55%, var(--background) 100%);
+  background-attachment: fixed;
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-dm-sans), sans-serif;
+  min-height: 100dvh;
+}
+
+:root.dark body {
+  background:
+    radial-gradient(circle at 15% -10%, color-mix(in srgb, var(--maroon) 30%, transparent), transparent 55%),
+    linear-gradient(160deg, #0c0407 0%, var(--maroon-dark) 30%, #2a0d16 65%, var(--background) 100%);
+}
+
+/* Liquid glass: high-intensity blur/saturation for the nav bar */
+.liquid-glass {
+  background: linear-gradient(
+    120deg,
+    rgb(var(--surface) / 0.55),
+    rgb(var(--surface) / 0.18)
+  );
+  backdrop-filter: blur(28px) saturate(200%);
+  -webkit-backdrop-filter: blur(28px) saturate(200%);
+  border: 1px solid rgb(var(--surface-border) / 0.25);
+  box-shadow:
+    0 8px 32px rgb(var(--surface-border) / 0.25),
+    inset 0 1px 0 rgb(var(--surface) / 0.5);
+}
+
+/* Softer glass for floating dashboard cards */
+.glass-card {
+  background: linear-gradient(
+    150deg,
+    rgb(var(--surface) / 0.65),
+    rgb(var(--surface) / 0.25)
+  );
+  backdrop-filter: blur(18px) saturate(160%);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
+  border: 1px solid rgb(var(--surface-border) / 0.18);
+  box-shadow:
+    0 20px 40px -12px rgb(var(--surface-border) / 0.35),
+    inset 0 1px 0 rgb(var(--surface) / 0.4);
+}
+
+.glass-panel {
+  background: rgb(var(--surface) / 0.5);
+  backdrop-filter: blur(14px) saturate(150%);
+  -webkit-backdrop-filter: blur(14px) saturate(150%);
+  border: 1px solid rgb(var(--surface-border) / 0.15);
+}
+
+::selection {
+  background: var(--maroon-light);
+  color: white;
+}
+
+.scrollbar-none {
+  scrollbar-width: none;
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
 }
