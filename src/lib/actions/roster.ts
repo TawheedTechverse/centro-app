@@ -85,12 +85,20 @@ export async function updateRoster(id: string, formData: FormData) {
   redirect(`/roster/${id}`);
 }
 
-export async function recordPunch(id: string, type: "in" | "out", lat: number, lng: number) {
+export async function recordPunch(
+  id: string,
+  type: "in" | "out",
+  lat: number,
+  lng: number
+): Promise<{ ok: true } | { ok: false; message: string }> {
+  // Thrown Errors from Server Actions have their message stripped in production
+  // builds, so expected validation failures are returned as data instead.
   const distance = distanceMeters(lat, lng, SHOP_LOCATION.lat, SHOP_LOCATION.lng);
   if (distance > PUNCH_RADIUS_METERS) {
-    throw new Error(
-      `You're ${Math.round(distance)}m from ${SHOP_LOCATION.name} — you must be within ${PUNCH_RADIUS_METERS}m to punch ${type}.`
-    );
+    return {
+      ok: false,
+      message: `You're ${Math.round(distance)}m from ${SHOP_LOCATION.name} — you must be within ${PUNCH_RADIUS_METERS}m to punch ${type}.`,
+    };
   }
 
   await prisma.roster.update({
@@ -104,6 +112,7 @@ export async function recordPunch(id: string, type: "in" | "out", lat: number, l
   revalidatePath("/");
   revalidatePath(`/roster/${id}`);
   revalidatePath("/timesheet");
+  return { ok: true };
 }
 
 const TASK_FIELDS = {

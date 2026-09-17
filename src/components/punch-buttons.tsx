@@ -28,9 +28,10 @@ export function PunchButtons({
       (pos) => {
         startTransition(async () => {
           try {
-            await recordPunch(rosterId, type, pos.coords.latitude, pos.coords.longitude);
-          } catch (e) {
-            setError(e instanceof Error ? e.message : "Punch failed. Try again.");
+            const result = await recordPunch(rosterId, type, pos.coords.latitude, pos.coords.longitude);
+            if (!result.ok) setError(result.message);
+          } catch {
+            setError("Punch failed. Try again.");
           } finally {
             setBusy(null);
           }
