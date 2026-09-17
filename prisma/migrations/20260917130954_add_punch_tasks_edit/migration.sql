@@ -1,0 +1,10 @@
+-- AlterTable
+ALTER TABLE "Roster" ADD COLUMN     "punchInAt" TIMESTAMP(3),
+ADD COLUMN     "punchInLat" DOUBLE PRECISION,
+ADD COLUMN     "punchInLng" DOUBLE PRECISION,
+ADD COLUMN     "punchOutAt" TIMESTAMP(3),
+ADD COLUMN     "punchOutLat" DOUBLE PRECISION,
+ADD COLUMN     "punchOutLng" DOUBLE PRECISION,
+ADD COLUMN     "taskFloorMopped" BOOLEAN NOT NULL DEFAULT false,
+ADD COLUMN     "taskFloorVacuumed" BOOLEAN NOT NULL DEFAULT false,
+ADD COLUMN     "taskToiletCleaned" BOOLEAN NOT NULL DEFAULT false;

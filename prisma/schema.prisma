@@ -21,6 +21,18 @@ model Roster {
   shiftEnd     String
   weekStart    DateTime
   swappedFrom  String?
+
+  punchInAt   DateTime?
+  punchInLat  Float?
+  punchInLng  Float?
+  punchOutAt  DateTime?
+  punchOutLat Float?
+  punchOutLng Float?
+
+  taskFloorVacuumed Boolean @default(false)
+  taskToiletCleaned Boolean @default(false)
+  taskFloorMopped   Boolean @default(false)
+
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 

@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import {
   AlarmClock,
   CalendarPlus,
+  Clock,
   Info,
   LayoutDashboard,
   Rocket,
@@ -15,6 +16,7 @@ import { ThemeToggle } from "./theme-toggle";
 const NAV_ITEMS = [
   { href: "/", label: "Dashboard", icon: LayoutDashboard },
   { href: "/roster/new", label: "Create Roster", icon: CalendarPlus },
+  { href: "/timesheet", label: "Timesheet", icon: Clock },
   { href: "/frequent-orders", label: "Frequent Orders", icon: TrendingUp },
   { href: "/expiry/view", label: "Closest Expiry", icon: AlarmClock },
   { href: "/boost", label: "Boost Business", icon: Rocket },
